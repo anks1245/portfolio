@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ name }}</title>
     <!-- Favicon -->
-    <link href="{% static '' %}img/fprofile.jpg" rel="icon">
+    <link href="{% static '' %}img/myprofile.jpg" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -26,10 +26,11 @@
 <body>
     <div class="container-fluid bg-primary d-flex align-items-center" style="min-height: 100vh;">
         <div class="container bg-white d-block p-5 justify-content-center" style="max-width: 480px;">
-            <form action="#">
+            <form action="auth" method="post">
+                {% csrf_token %}
                 <center><h3 class="text test-primary mb-5">Login</h3></center>
                 <input type="text" name="email" class="form-control m-2" placeholder="abc@xyz.com">
-                <input type="password" name="password" class="form-control m-2" placeholder="*********">
+                <input type="password" name="pass" class="form-control m-2" placeholder="*********">
                 <center><input type="submit" class="btn btn-outline-primary mx-auto m-2" value="Login"></center>
             </form>
         </div>

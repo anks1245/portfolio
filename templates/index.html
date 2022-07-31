@@ -82,13 +82,14 @@
                 </div>
                 <div class="col-lg-7 text-center text-lg-left">
                     <h3 class="text-white font-weight-normal mb-3">I'm</h3>
-                    <h1 class="display-3 text-uppercase text-primary mb-2" style="-webkit-text-stroke: 2px #ffffff;">Ankit Ram Nag</h1>
+                    <h1 class="display-3 text-uppercase text-primary mb-2" style="-webkit-text-stroke: 2px #ffffff;">{{ data.user.name }}</h1>
+                    <h3 class="text-white font-weight-normal mb-3">Visitor's Count: {{ data.user_ip }}</h3>
                     <h1 class="typed-text-output d-inline font-weight-lighter text-white"></h1>
-                    <div class="typed-text d-none">Web Developer, App Developer, Graphic Designer</div>
+                    <div class="typed-text d-none">{{ data.heroResp.spe}}</div>
                     <div class="d-flex align-items-center justify-content-center justify-content-lg-start pt-5">
-                        <a href="" class="btn btn-outline-light mr-5">Download CV</a>
+                        <a href="{% static '' %}{{ data.heroResp.hero.cv_file }}" class="btn btn-outline-light mr-5" target="_blank">Download CV</a>
                         <button type="button" class="btn-play" data-toggle="modal"
-                            data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-target="#videoModal">
+                            data-src="{{ data.heroResp.hero.embedded_link }}" data-target="#videoModal">
                             <span></span>
                         </button>
                         <h5 class="font-weight-normal text-white m-0 ml-4 d-none d-sm-block">Play Video</h5>
@@ -112,21 +113,17 @@
                     <img class="img-fluid rounded w-100" src="{% static '' %}img/myabout.jpg" alt="">
                 </div>
                 <div class="col-lg-7">
-                    <h3 class="mb-4">App Developer & Web Developer</h3>
-                    <p>An innovative individual with a BTech in Computer Science Engineering, 
-                        desirous to find the job position of a Software Engineer to apply my 
-                        exceptional knowledge of design, development, coding and quality testing 
-                        of software as per clients requirements.
-                    </p>
+                    <h3 class="mb-4">{{ data.about.specialization }}</h3>
+                    <p>{{ data.about.about }}</p>
                     <div class="row mb-3">
-                        <div class="col-sm-6 py-2"><h6>Name: <span class="text-secondary">Ankit Ram Nag</span></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Name: <span class="text-secondary">{{ data.user.name }}</span></h6></div>
                         <div class="col-sm-6 py-2"><h6>Birthday: <span class="text-secondary">18 April 2002</span></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Degree: <span class="text-secondary">Bachelor</span></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Experience: <span class="text-secondary">2 years</span></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Phone: <span class="text-secondary">+91 9114144667</span></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Email: <span class="text-secondary">anks1245@gmail.com</span></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Github : <a class="text-secondary" style="cursor: pointer;" href="https://github.com/anks1245">https://github.com/anks1245</a></h6></div>
-                        <div class="col-sm-6 py-2"><h6>Linkedin: <a class="text-secondary" href="https://www.linkedin.com/in/ankit-ram-nag-8432a71a1/">https://www.linkedin.com/in/ankit-ram-nag-8432a71a1/</a></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Degree: <span class="text-secondary">{{ data.about.degree }}</span></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Experience: <span class="text-secondary">{{ data.about.experience }}</span></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Phone: <span class="text-secondary">{{ data.about.phone }}</span></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Email: <span class="text-secondary">{{ data.user.email }}</span></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Github : <a class="text-secondary" style="cursor: pointer;" href="{{ data.about.github }}">{{ data.about.github }}</a></h6></div>
+                        <div class="col-sm-6 py-2"><h6>Linkedin: <a class="text-secondary" href="{{ data.about.linkedin }}">{{ data.about.linkedin }}</a></h6></div>
                     </div>
                     <a href="" class="btn btn-outline-primary mr-4">Hire Me</a>
                     <a href="" class="btn btn-outline-primary">Learn More</a>
@@ -148,47 +145,27 @@
                 <div class="col-lg-6">
                     <h3 class="mb-4">My Education</h3>
                     <div class="border-left border-primary pt-2 pl-4 ml-2">
+                        {% for edu in data.education %}
                         <div class="position-relative mb-4">
                             <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Master In CSE</h5>
-                            <p class="mb-2"><strong>Cambridge University</strong> | <small>2000 - 2050</small></p>
-                            <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
+                            <h5 class="font-weight-bold mb-1">{{ edu.degree }}</h5>
+                            <p class="mb-2"><strong>{{ edu.university }}</strong> | <small>{{ edu.start_year }}-{{edu.end_year}}</small></p>
+                            <p>{{ edu.desp }}</p>
                         </div>
-                        <div class="position-relative mb-4">
-                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Master In CSE</h5>
-                            <p class="mb-2"><strong>Cambridge University</strong> | <small>2000 - 2050</small></p>
-                            <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-                        </div>
-                        <div class="position-relative mb-4">
-                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Master In CSE</h5>
-                            <p class="mb-2"><strong>Cambridge University</strong> | <small>2000 - 2050</small></p>
-                            <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <h3 class="mb-4">My Expericence</h3>
                     <div class="border-left border-primary pt-2 pl-4 ml-2">
+                        {% for exp in data.experience %}
                         <div class="position-relative mb-4">
                             <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Web Designer</h5>
-                            <p class="mb-2"><strong>Soft Company</strong> | <small>2000 - 2050</small></p>
-                            <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
+                            <h5 class="font-weight-bold mb-1">{{ exp.role }}</h5>
+                            <p class="mb-2"><strong>{{ exp.company }}</strong> | <small>{{ exp.start_year }}-{{exp.end_year}}</small></p>
+                            <p>{{ exp.desp }}</p>
                         </div>
-                        <div class="position-relative mb-4">
-                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Web Designer</h5>
-                            <p class="mb-2"><strong>Soft Company</strong> | <small>2000 - 2050</small></p>
-                            <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-                        </div>
-                        <div class="position-relative mb-4">
-                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
-                            <h5 class="font-weight-bold mb-1">Web Designer</h5>
-                            <p class="mb-2"><strong>Soft Company</strong> | <small>2000 - 2050</small></p>
-                            <p>Tempor eos dolore amet tempor dolor tempor. Dolore ea magna sit amet dolor eirmod. Eos ipsum est tempor dolor. Clita lorem kasd sed ea lorem diam ea lorem eirmod duo sit ipsum stet lorem diam</p>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

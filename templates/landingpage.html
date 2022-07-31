@@ -1,0 +1,409 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Landing Page</title>
+    <link rel="stylesheet" href="{% static '' %}bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="{% static '' %}fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="{% static '' %}fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static '' %}fonts/fontawesome5-overrides.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        {% include "dashboard_helper/navigation.html" %}
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                {% include "dashboard_helper/header.html" %}
+                <div class="container-fluid">
+                    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                        <h3 class="text-dark mb-0">Edit Homepage</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
+                    </div>
+                    <div class="row">
+                        <div class="container">
+                            <section class="row mb-3">
+                                <h3>Hero</h3>
+                                <div class="col-lg-5 col-md-4 card shadow p-4 m-2">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <img src="../assets/img/profile.jpg" alt="img" class="rounded-circle m-3 mt-4">
+                                                <input type="file" class="form-control d-none" id="profile-img">
+                                                <label class="btn btn-primary sm-6 m-3" for="profile-img">Choose File</label>
+                                                <span id="img-name"></span>
+                                                <div class="m-3">
+                                                    <button type="submit" class="btn btn-primary sm-4">Save Changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-4 card shadow p-4 m-2">
+                                    <div class="card-body mb-3">
+                                        <label for="title">Name</label>
+                                        <form enctype="multipart/form-data" action="/update-heroData" method="post">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col">
+                                                    <input type="text" name="title" class="form-control mb-3" value="{{ data.heroResp.hero.title }}">
+                                                </div>
+                                            </div>
+                                            <label for="specialization">Specialization</label>
+                                            <div id="add_specialization">
+                                                <!-- <span class="text text-danger">{{ data.heroResp.spe }}</span> -->
+                                                
+                                                {% if data.heroResp.spe|length > 0 %}
+                                                    {% for spe in data.heroResp.spe %}
+                                                        {% if spe != '' %}
+                                                            <div class="row" id="spe-2">
+                                                                <div class="col">
+                                                                    <input type="text" name="spe[]" id`="spe-2" class="form-control mb-3" placeholder="specialization" value="{{ spe }}">
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <button class="btn btn-primary sm-4 mx-1" onclick="addSpe(1)" id="addSpe-1" type="button">+</button><button class="btn btn-danger sm-4 mx-1" onclick="delSpe(2)" id="delSpe-2" type="button">-</button>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <div class="row" id="spe-1">
+                                                        <div class="col">
+                                                            <input type="text" name="spe[]" id`="spe-1" class="form-control mb-3" placeholder="specialization" value="{{ data.heroResp.spe|length }}">
+                                                        </div>
+                                                        <div class="col-md-4 col-2">
+                                                            <button class="btn btn-primary sm-4" onclick="addSpe(1)" id="addSpe-1" type="button">+</button>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label>Upload CV/Resume</label>
+                                                <div class="col col-11 mb-3">
+                                                    <a href="{% static '' %}{{ data.heroResp.hero.cv_file }}" download="{{ data.heroResp.hero.cv_file }}" class="text text-info">Download Resume</a>
+                                                    <input type="file" name="resume" class="form-control">
+                                                </div>
+                                                <div class="col col-11 mb-3">
+                                                    <label>Embedded Link</label>
+                                                    <input type="text" name="video-link" class="form-control" value="{{ data.heroResp.hero.embedded_link }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <button class="btn btn-primary sm-4" type="submit">Save Changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="row mb-3">
+                                <h3>About Me</h3>
+                                <div class="col-lg-5 col-md-4 card shadow p-4 m-2">
+                                    <label for="title-about">Title</label>
+                                    <form method="post" action="/update-about">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="check" value="1">
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <input type="text" class="form-control" id="title-about" name="title-about" value="{{ data.about.specialization }}">
+                                            </div>
+                                        </div>
+                                        <label>Description</label>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <textarea class="form-control" rows="6" id="desp-about" name="desp-about">{{ data.about.about }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <button class="btn btn-primary sm-4" type="submit">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-lg-5 col-md-4 card shadow p-4 m-2">
+                                    <h5 class="card-header text text-center">Bio-Data</h5>
+                                    <form method="post" action="/update-bio">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="check" value="2">
+                                        <div class="row">
+                                            <div class="col mb-3">
+                                                <label for="degree">Degree</label>
+                                                <input type="text" name="degree-about" class="form-control" id="degree-about" value="{{ data.about.degree }}">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <label for="experience">Expericence</label>
+                                                <input type="text" name="experience-about" class="form-control" id="experience-about" value="{{ data.about.experience }}">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <label for="phone">Phone</label>
+                                                <input type="text" name="phone-about" class="form-control" id="phone" value="{{ data.about.phone }}">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <label for="email">Email</label>
+                                                <input type="email" name="email-about" class="form-control" id="email" value="{{ data.user.email }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <label for="github">Github Link</label>
+                                                <input type="text" name="github-about" class="form-control" id="github" value="{{ data.about.github }}">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <label for="linkdin">LinkedIn Link</label>
+                                                <input type="text" name="linkdin-about" class="form-control" id="linkdin" value="{{ data.about.linkedin }}">
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="mb-3">
+                                            <button class="btn btn-primary sm-4" type="submit">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+                            <section class="row mb-3">
+                                <h3>Education</h3>
+                                <div class="col-lg-5 col-md-4 card shadow p-4 m-2">
+                                    <form method="post" action="add-education">
+                                        {% csrf_token %}
+                                        <div id="add_education">
+                                                <div class="edu-1" style="border-bottom: 1px solid rgb(200, 200, 200)">
+                                                    <div class="row mb-3" >
+                                                        <div class="col">
+                                                            <label for="degree-1">Degree</label>
+                                                            <input type="text" class="form-control" name="degree[]" id="degree-1">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col">
+                                                            <label for="university-1">University</label>
+                                                            <input type="text" class="form-control" name="university[]" id="university-1">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-4">
+                                                            <label for="start_date-1">Start Date</label>
+                                                            <input type="number" class="form-control" id="start_date-1" name="start[]" min="1900" max="2099" value="2019">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="end_date-1">End Date</label>
+                                                            <input type="number" class="form-control" id="end_date-1" name="end[]" min="1900" max="2099" value="2023">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col">
+                                                            <label id="edu_desp">Description</label>
+                                                            <textarea rows="5" name="description[]" id="edu_desp" class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row justify-content-end mb-3">
+                                                        <div class="col-auto">
+                                                            <button class="btn btn-primary btn-sm" onclick="addEdu(1)" id="addEdu-1" type="button">Add More...</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                        </div>
+                                        <div class="mb-3 mt-3">
+                                            <button type="submit" class="btn btn-primary btn-sm">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-lg-5 col-md-4 card shadow p-4 m-2">
+                                    <div class="card-header text text-center">
+                                        <h3>Education Data</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        {% for edu in data.education %}
+                                            <div class="border p-4 m-1">
+                                                <h5 class="border-bottom"><b>{{ edu.degree }}</b></h5>
+                                                <span><b>{{ edu.university }} | {{ edu.start_year }}-{{edu.end_year}}</b></span>
+                                                <p>{{ edu.desp }}</p>
+                                                <div class="row justify-content-end mb-3">
+                                                    <div class="col-auto">
+                                                        <button class="btn btn-danger btn-sm"  type="button">Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="row mb-3">
+                                <h3>Experience</h3>
+                                <div class="col-lg-5 col-md-4 card shadow p-4 m-2">
+                                    <form method="post" action="add-experience">
+                                        {% csrf_token %}
+                                    <div id="add_experience">
+                                        <div class="exp-1" style="border-bottom: 1px solid rgb(200, 200, 200)">
+                                            <div class="row mb-3" >
+                                                <div class="col">
+                                                    <label for="pos-1">Position</label>
+                                                    <input type="text" class="form-control" name="pos[]" id="pos-1">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <label for="company-1">Company</label>
+                                                    <input type="text" class="form-control" name="company[]" id="company-1">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <label for="start_com-1">Start Date</label>
+                                                    <input type="number" class="form-control" id="start_com-1" name="start_com[]" min="1900" max="2099" value="2019">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="end_com-1">End Date</label>
+                                                    <input type="number" class="form-control" id="end_com-1" name="end_com[]" min="1900" max="2099" value="2023">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <label id="exp_desp">Description</label>
+                                                    <textarea rows="5" id="exp_desp" name="description_com[]" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-end mb-3">
+                                                <div class="col-auto">
+                                                    <button class="btn btn-primary btn-sm" onclick="addExp(1)" id="addExp-1" type="button">Add More...</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3 mt-3">
+                                        <button type="submit" class="btn btn-primary btn-sm">Save Changes</button>
+                                    </div>
+                                    </form>
+                                </div>
+                                <div class="col-lg-5 col-md-4 card shadow p-4 m-2">
+                                    <div class="card-header text text-center">
+                                        <h3>Experience Data</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        {% for exp in data.experience %}
+                                            <div class="border p-4 m-1">
+                                                <h5 class="border-bottom"><b>{{ exp.role }}</b></h5>
+                                                <span><b>{{ exp.company }} | {{ exp.start_year }}-{{exp.end_year}}</b></span>
+                                                <p>{{ exp.desp }}</p>
+                                                <div class="row justify-content-end mb-3">
+                                                    <div class="col-auto">
+                                                        <button class="btn btn-danger btn-sm"  type="button">Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- <section class="card shadow p-4 m-2 text-align-center">
+                                <h3>Skills</h3>
+                            </section>
+                            <section class="card shadow p-4 m-2 text-align-center">
+                                <h3>Services</h3>
+                            </section>
+                            <section class="card shadow p-4 m-2 text-align-center">
+                                <h3>Client says</h3>
+                            </section>
+                            <section class="card shadow p-4 m-2 text-align-center">
+                                <h3>Latest Blogs</h3>
+                            </section> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © Brand 2021</span></div>
+                </div>
+            </footer>
+        </div>
+        <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    <script src="{% static '' %}bootstrap/js/bootstrap.min.js"></script>
+    <script src="{% static '' %}js/chart.min.js"></script>
+    <script src="{% static '' %}js/bs-init.js"></script>
+    <script src="{% static '' %}js/theme.js"></script>
+    <script>
+        //for hero section
+        function addSpe(count){
+            var allChildren = $('#add_specialization').children.length
+            console.log(allChildren)
+            count = count + 1;
+            spe = '<div class="row" id="spe-'+count+'"><div class="col"><input type="text" name="spe[]" id="spe-'+count+'"class="form-control mb-3" placeholder="specialization"></div><div class="col-md-4 col-2"> <button class="btn btn-primary sm-4" onclick="addSpe('+count+')" id="addSpe-'+count+'" type="button">+</button> <label class="btn btn-danger sm-4" onclick="delSpe('+count+')" id="delSpe-'+count+'" type="button">-</label></div></div>'
+            
+            $('#add_specialization').append(spe)
+        }
+        function delSpe(count){
+            
+            console.log($('#add_specialization').children.length)
+            $('#spe-'+count).remove()
+            
+        }
+
+        function addEdu(count){
+            count = count + 1;
+            console.log(count)
+            if(count>1){
+                $('#addEdu-1').hide()
+            }else{
+                $('#addEdu-1').show()
+            }
+            edu = '<div class="edu-'+count+'" style="border-bottom: 1px solid rgb(200, 200, 200)"><div class="row mb-3"><div class="col"><label for="degree-'+count+'">Degree</label><input type="text" class="form-control" name="degree[]" id="degree-'+count+'"></div></div>'+
+            '<div class="row mb-3"><div class="col"><label for="university-'+count+'">University</label><input type="text" class="form-control" name="university[]" id="university-'+count+'"></div></div>'+
+            '<div class="row mb-3"><div class="col-md-4"><label for="start_date-'+count+'">Start Date</label><input type="number" class="form-control" id="start_date-'+count+'" name="start[]" min="1900" max="2099" value="2019">'+
+            '</div><div class="col-md-4"><label for="end_date-'+count+'">End Date</label><input type="number" class="form-control" id="end_date-'+count+'" name="end[]" min="1900" max="2099" value="2023"></div></div>' +
+            '<div class="row mb-3"><div class="col"><label id="edu_desp-'+count+'">Description</label><textarea rows="5" id="edu_desp-'+count+'" name="description[]" class="form-control"></textarea></div></div>' + 
+            '<div class="row justify-content-end mb-3"><div class="col-auto">'+
+            '<button class="btn btn-primary btn-sm m-1" onclick="addEdu('+count+')" type="button">+</button>'+
+            '<button class="btn btn-danger btn-sm m-1" onclick="delEdu('+count+')" type="button">-</button></div></div></div>'
+            $('#add_education').append(edu)
+        }
+        function delEdu(count){
+            $('.edu-'+count).remove()
+            count = count - 1;
+            if(count <= 1){
+                $('#addEdu-1').show()
+            }
+        }
+
+        function addExp(count){
+            count = count + 1;
+            console.log(count)
+            if(count>1){
+                $('#addExp-1').hide()
+            }else{
+                $('#addExp-1').show()
+            }
+            edu = '<div class="exp-'+count+'" style="border-bottom: 1px solid rgb(200, 200, 200)"><div class="row mb-3"><div class="col"><label for="pos-'+count+'">Position</label><input type="text" class="form-control" name="pos[]" id="pos-'+count+'"></div></div>'+
+            '<div class="row mb-3"><div class="col"><label for="company-'+count+'">Company</label><input type="text" class="form-control" name="company[]" id="company-'+count+'"></div></div>'+
+            '<div class="row mb-3"><div class="col-md-4"><label for="start_com-'+count+'">Start Date</label><input type="number" class="form-control" id="start_com-'+count+'" name="start_com[]" min="1900" max="2099" value="2019">'+
+            '</div><div class="col-md-4"><label for="end_com-'+count+'">End Date</label><input type="number" class="form-control" id="end_com-'+count+'" name="end_com[]" min="1900" max="2099" value="2023"></div></div>' +
+            '<div class="row mb-3"><div class="col"><label id="exp_desp-'+count+'">Description</label><textarea rows="5" id="exp_desp-'+count+'" name="description_com[]" class="form-control"></textarea></div></div>' + 
+            '<div class="row justify-content-end mb-3"><div class="col-auto">'+
+            '<button class="btn btn-primary btn-sm m-1" onclick="addExp('+count+')" type="button">+</button>'+
+            '<button class="btn btn-danger btn-sm m-1" onclick="delExp('+count+')" type="button">-</button></div></div></div>'
+            $('#add_experience').append(edu)
+        }
+        function delExp(count){
+            console.log(count)
+            $('.exp-'+count).remove()
+            count = count - 1;
+            if(count <= 1){
+                $('#addExp-1').show()
+            }
+        }
+    </script>
+</body>
+</html>

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,18 +27,20 @@ SECRET_KEY = 'django-insecure-k^6-*+%7c1s)($$t-#xqu$fd6=s8lubft&rsno0l1pshv(*q7!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'calc.apps.CalcConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +51,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'calc.middlewares.is_authenticated'
 ]
 
 ROOT_URLCONF = 'test1.urls'
@@ -56,7 +62,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'templates')
+            os.path.join(BASE_DIR,'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -72,14 +78,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'test1.wsgi.application'
 
+WHITENOISE_USE_FINDERS = True
+
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dabrd76c5s3gdj',
+        'USER': 'axkpomocsmepou',
+        'PASSWORD': 'a08d0e5ae21af3c9b37d8e8dfedb81475d583a3e0a8b3819e7ca7f679be2c8d8' ,
+        'HOST':'ec2-34-235-31-124.compute-1.amazonaws.com'
     }
 }
 
@@ -119,10 +134,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'assets')
+    os.path.join(BASE_DIR,'assets'),
+    os.path.join(BASE_DIR,'media')
 ]
 STATIC_ROOTS = os.path.join(BASE_DIR,'assets')
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+# django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
