@@ -76,7 +76,7 @@ def show_ip_address(request):
 def index(request):
     ip = get_ip_address(request,'index')
 
-    user = Register.objects.get(id = request.session.get('id'))
+    user = Register.objects.get(id = 1)
     about = About.objects.all()
     education = Education.objects.all().order_by('id').reverse()
     experience = Experience.objects.all().order_by('id').reverse()

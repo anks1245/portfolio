@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'whitenoise.runserver_nostatic',
+
 ]
 
 MIDDLEWARE = [
@@ -89,12 +90,18 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'dabrd76c5s3gdj',
+    #     'USER': 'axkpomocsmepou',
+    #     'PASSWORD': 'a08d0e5ae21af3c9b37d8e8dfedb81475d583a3e0a8b3819e7ca7f679be2c8d8' ,
+    #     'HOST':'ec2-34-235-31-124.compute-1.amazonaws.com'
+    # },
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dabrd76c5s3gdj',
-        'USER': 'axkpomocsmepou',
-        'PASSWORD': 'a08d0e5ae21af3c9b37d8e8dfedb81475d583a3e0a8b3819e7ca7f679be2c8d8' ,
-        'HOST':'ec2-34-235-31-124.compute-1.amazonaws.com'
+        'NAME': 'test1',
+        'USER': 'postgres',
+        'PASSWORD': '1234' ,
     }
 }
 
@@ -136,15 +143,16 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 
+STATIC_ROOTS = os.path.join(BASE_DIR,'staticfiles')
+
+# MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'assets'),
     os.path.join(BASE_DIR,'media')
 ]
-STATIC_ROOTS = os.path.join(BASE_DIR,'assets')
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
