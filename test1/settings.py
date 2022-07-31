@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-k^6-*+%7c1s)($$t-#xqu$fd6=s8lubft&rsno0l1pshv(*q7!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -144,7 +144,7 @@ STATIC_ROOTS = os.path.join(BASE_DIR,'assets')
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
