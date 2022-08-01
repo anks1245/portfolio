@@ -86,18 +86,18 @@ WHITENOISE_USE_FINDERS = True
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dabrd76c5s3gdj',
-        'USER': 'axkpomocsmepou',
-        'PASSWORD': 'a08d0e5ae21af3c9b37d8e8dfedb81475d583a3e0a8b3819e7ca7f679be2c8d8' ,
-        'HOST':'ec2-34-235-31-124.compute-1.amazonaws.com',
-        'PORT':5432
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'dabrd76c5s3gdj',
+    #     'USER': 'axkpomocsmepou',
+    #     'PASSWORD': 'a08d0e5ae21af3c9b37d8e8dfedb81475d583a3e0a8b3819e7ca7f679be2c8d8' ,
+    #     'HOST':'ec2-34-235-31-124.compute-1.amazonaws.com',
+    #     'PORT':5432
+    # }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'NAME': 'test1',
