@@ -9,6 +9,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 
 from calc.models import About, Education, Experience, GetIP, Hero, Register
+from django.core.mail import send_mail
+
 
 
 # Create your views here.
@@ -336,5 +338,17 @@ def addExperience(request):
 
 
     #end editHomepage
+
+def sendMail(request):
+    if request.method == 'POST':
+        _name = request.POST['name']
+        _msg = "You have a mail from "+_name+"<br>"+request.POST['message']
+        _subject = request.POST['subject']
+        _email = request.POST['email']
+
+        send_mail("Message Sent Successfully",_msg,'anks1245@gmail.com',[_email],fail_silently=False)
+        send_mail(_subject,_msg,'anks1245@gmail.com',['anks1245@gmail.com'],fail_silently=False)
+
+    return HttpResponse("Email sent successfully") 
 
 #functionality ends here

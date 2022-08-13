@@ -9,3 +9,4 @@
 -- INSERT INTO calc_about(specialization,about,birthday,degree,experience,phone,github,linkedin,updated_at) 
 -- VALUES ("","","","","","","","",CURRENT_TIMESTAMP);
 
+UPDATE calc_register SET dob='2002-04-18' WHERE id=1;

@@ -24,4 +24,6 @@ urlpatterns = [
 
     path('add-education',views.addEducation,name="addEducation"),
     path('add-experience',views.addExperience,name="addExperience"),
+
+    path('sendMail',views.sendMail,name='sendMail'),
 ]

@@ -489,26 +489,27 @@
                 <div class="col-lg-8">
                     <div class="contact-form text-center">
                         <div id="success"></div>
-                        <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                        <form name="sentMessage" novalidate="novalidate" action="sendMail" method="post">
+                            {% csrf_token %}
                             <div class="form-row">
                                 <div class="control-group col-sm-6">
-                                    <input type="text" class="form-control p-4" id="name" placeholder="Your Name"
+                                    <input type="text" class="form-control p-4" id="name" name="name" placeholder="Your Name"
                                         required="required" data-validation-required-message="Please enter your name" />
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="control-group col-sm-6">
-                                    <input type="email" class="form-control p-4" id="email" placeholder="Your Email"
+                                    <input type="email" class="form-control p-4" id="email" name="email" placeholder="Your Email"
                                         required="required" data-validation-required-message="Please enter your email" />
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="control-group">
-                                <input type="text" class="form-control p-4" id="subject" placeholder="Subject"
+                                <input type="text" class="form-control p-4" id="subject" name="subject" placeholder="Subject"
                                     required="required" data-validation-required-message="Please enter a subject" />
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
-                                <textarea class="form-control py-3 px-4" rows="5" id="message" placeholder="Message"
+                                <textarea class="form-control py-3 px-4" rows="5" id="message" name="message" placeholder="Message"
                                     required="required"
                                     data-validation-required-message="Please enter your message"></textarea>
                                 <p class="help-block text-danger"></p>
@@ -530,12 +531,12 @@
     <div class="container-fluid bg-primary text-white mt-5 py-5 px-sm-3 px-md-5">
         <div class="container text-center py-5">
             <div class="d-flex justify-content-center mb-4">
-                <a class="btn btn-light btn-social mr-2" href="#"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-light btn-social mr-2" href="#"><i class="fa fa-envelope"></i></a>
                 <a class="btn btn-light btn-social mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
                 <a class="btn btn-light btn-social mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
                 <a class="btn btn-light btn-social" href="#"><i class="fab fa-instagram"></i></a>
             </div>
-            <div class="d-flex justify-content-center mb-3">
+            <!-- <div class="d-flex justify-content-center mb-3">
                 <a class="text-white" href="#">Privacy</a>
                 <span class="px-3">|</span>
                 <a class="text-white" href="#">Terms</a>
@@ -543,8 +544,8 @@
                 <a class="text-white" href="#">FAQs</a>
                 <span class="px-3">|</span>
                 <a class="text-white" href="#">Help</a>
-            </div>
-            <p class="m-0">&copy; <a class="text-white font-weight-bold" href="#">Domain Name</a>. All Rights Reserved. Designed by <a class="text-white font-weight-bold" href="https://htmlcodex.com">HTML Codex</a>
+            </div> -->
+            <p class="m-0">&copy; <a class="text-white font-weight-bold" href="#">Ankit Ram Nag</a>. All Rights Reserved. Designed by <a class="text-white font-weight-bold" href="https://htmlcodex.com">Ankit Ram Nag</a>
             </p>
         </div>
     </div>
