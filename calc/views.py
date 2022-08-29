@@ -108,7 +108,14 @@ def dashboard(request):
     ip = get_ip_address(request,'dashboard')
     if(request.session.get('is_authenticated')):
         user=Register.objects.get(id = request.session.get('id'))
-        response = { 'user':user , }
+
+        pc_count = GetIP.objects.filter(device='pc').count()
+
+        mobile_count = GetIP.objects.filter(device='mobile').count()
+
+        others = GetIP.objects.exclude(device="mobile").exclude(device="pc").count()
+
+        response = { 'user':user , 'count':ip, 'pc':pc_count,'mobile':mobile_count,'others':others }
         return render(request,'admin.html',{'data':response})
     else:
         return redirect('login')
@@ -117,7 +124,9 @@ def profile(request):
     if is_authenticated(request):
         
         user=Register.objects.get(id = request.session.get('id'))
-        response = { 'user':user , }
+        saveip = GetIP.objects.all()
+
+        response = { 'user':user ,'visitors':saveip.count() }
         return render(request,'profile.html',{'data':response})
         
     else:
