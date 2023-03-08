@@ -139,12 +139,25 @@ def landingpage(request):
         education = Education.objects.all().order_by('id').reverse()
         experience = Experience.objects.all()
         hero = Hero.objects.all()
+
+        # print(hero.count())
         heroResp = {
-            'hero':hero[0],
-            'spe':(hero[0].specialization).split(',')
-        }
-        response = { 'heroResp':heroResp, 'user':user , 'about':about[0], 'education':education,'experience':experience }
+                'hero':'',
+                'spe':''
+            }
+        # print(about)
+        aboutHero = []
+        if(hero.count() > 0):
+            heroResp = {
+                'hero':hero[0],
+                'spe':(hero[0].specialization).split(',')
+            }
+        if(about.count() > 0):
+                aboutHero = about[0]
+        print(heroResp)
+        response = { 'heroResp':heroResp, 'user':user , 'about':aboutHero, 'education':education,'experience':experience }
         return render(request,'landingpage.html',{'data':response})
+        # return render(request,'landingpage.html')
     else:
         return redirect('login')
     # return HttpResponse("hi")
@@ -234,6 +247,8 @@ def updateHeroImage(request):
 
 def updateHeroData(request):
     if request.method == 'POST': 
+        
+        print(request.session.get('id'))
         ch = ''
         for res in request.POST.getlist('spe[]'):
             ch += res + ','
@@ -243,7 +258,6 @@ def updateHeroData(request):
         _link = request.POST['video-link']
 
         
-
         heroData = Hero(id=request.session.get('id'),title= _title, specialization = ch, cv_file = _file, embedded_link = _link)
 
         if Hero.objects.count() > 0:
@@ -251,7 +265,7 @@ def updateHeroData(request):
         else :
             heroData.save()
         
-
+        
         # return HttpResponse(file)
     return redirect('landingpage')
 
@@ -272,9 +286,9 @@ def updateAbout(request):
 
         _dob = user.dob
 
-        
-
         about = About(id = request.session.get('id'),specialization = _title,about=_desp,birthday = _dob)
+
+        print(About.objects.count())
 
         if About.objects.count()>0:
     #         if check == 1:

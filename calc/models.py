@@ -4,6 +4,7 @@ from pyexpat import model
 from turtle import title
 from unicodedata import name
 from django.db import models
+from django.utils import timezone
 
 
 # Create your models here.
@@ -17,7 +18,7 @@ class Register(models.Model):
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
-    created_at = models.DateTimeField(default=datetime.today)
+    created_at = models.TextField(default=datetime.today)
 
 class GetIP(models.Model):
     ip_address = models.CharField(max_length=255)
@@ -26,18 +27,18 @@ class GetIP(models.Model):
     device = models.CharField(max_length=255)
     device_type = models.CharField(max_length=255)
     visited_at = models.CharField(max_length=255,null=True)
-    created_at = models.DateTimeField(default=datetime.today)
+    created_at = models.TextField(default=datetime.utcnow)
 
 class About(models.Model):
     specialization = models.CharField(max_length=255,default='')
     about = models.TextField(max_length=255,default='')
-    birthday = models.DateField()
+    birthday = models.TextField()
     degree = models.CharField(max_length=100,default='')
     experience = models.CharField(max_length=55,default='')
     phone = models.CharField(max_length=255,default='')
     github = models.CharField(max_length=255,default='')
     linkedin = models.CharField(max_length=255,default='')
-    updated_at = models.DateTimeField(default=datetime.today)
+    updated_at = models.TextField(default=datetime.today)
 
 
 class Education(models.Model):
@@ -46,7 +47,7 @@ class Education(models.Model):
     start_year = models.CharField(max_length=6)
     end_year = models.CharField(max_length=6)
     desp = models.CharField(max_length=255)
-    updated_at = models.DateTimeField(default=datetime.today)
+    updated_at = models.TextField(default=datetime.today)
 
 
 class Experience(models.Model):
@@ -55,7 +56,7 @@ class Experience(models.Model):
     start_year = models.CharField(max_length=6)
     end_year = models.CharField(max_length=6)
     desp = models.CharField(max_length=255)
-    updated_at = models.DateTimeField(default=datetime.today)
+    updated_at = models.TextField(default=datetime.today)
 
 
 class Blogs(models.Model):
@@ -66,7 +67,7 @@ class Blogs(models.Model):
     img = models.ImageField(upload_to='blog_img')
     body = models.CharField(max_length=255)
     author = models.CharField(max_length=55)
-    updated_at = models.DateTimeField(default=datetime.today)
+    updated_at = models.TextField(default=datetime.today)
 
 class Hero(models.Model):
     title = models.CharField(max_length=55)
@@ -74,7 +75,7 @@ class Hero(models.Model):
     hero_img = models.ImageField(upload_to='uploads')
     cv_file = models.FileField(upload_to='info')
     embedded_link = models.CharField(max_length=255)
-    updated_at = models.DateTimeField(default=datetime.today)
+    updated_at = models.TextField(default=datetime.today)
 
 
 
